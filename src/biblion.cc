@@ -14,10 +14,12 @@
  * You should have received a copy of the GNU General Public License along
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+#include "config.h"
+#include <stdio.h>
+#include <string.h>
 
 #include "biblion.hh"
-
-extern "C" int yylex(const char* str);
+#include "cita-lexer.h"
 
 
 namespace octetos
@@ -26,11 +28,19 @@ namespace octetos
 	{
 	}
 	
-	std::string Biblion::get_Cita(const std::string& c)
+	std::string Biblion::get_Cita(const std::string& str)
 	{
-		yylex("Genesis 1:1");
+		octetos_biblion_Tray ty;
+		octetos_biblion_init(&ty);
 
-		return "";
+		//ty.str = (const char*)malloc(str.size());
+		//strcpy((char*)ty.str,(char*)str.c_str());
+		ty.str = str.c_str();
+		ty.lenguaje = BiblionLenguaje::ESPANOL;
+		int ret = cita_parser(&ty);
+
+		if(ret == 0) return "Cita...";
+		return "#error";
 	}
 
 
@@ -44,4 +54,28 @@ namespace octetos
 	 {
 		 this->file = file;
 	 }
+
+
+
+
+	bool getPackageInfo(core::Artifact& packinfo)
+	{
+		packinfo.name = PACKAGE;
+		packinfo.brief = "Libreria Biblion de Octetos.";
+		//packinfo.url = "https://github.com/azaeldevel/";
+		packinfo.name_decorated = "Libreria Biblion de Octetos";
+		//std::string ver = VERSION;
+		if(!packinfo.version.set(VERSION)) 
+		{
+			printf("Version '%s'\n",VERSION);
+			return false;
+		}		
+		packinfo.licence.type = core::Licence::Type::GPLv3;		
+		packinfo.licence.name_public = PACKAGE;
+		packinfo.licence.owner = "Azael Reyes";
+		packinfo.licence.year = 2020;
+        packinfo.licence.contact = "azael.devel@gmail.com";
+		
+		return true;	
+	}
 }

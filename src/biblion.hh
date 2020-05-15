@@ -16,9 +16,16 @@
  */
 
 #include <string>
+#include <octetos/core/Artifact.hh>
  
 namespace octetos
 {
+
+
+/**
+* \brief retorna la informacion del paquete
+**/
+bool getPackageInfo(core::Artifact&);
 
 class IBiblion
 {
@@ -27,15 +34,7 @@ private:
 	
 public:
 	IBiblion(std::string& file);
-	virtual std::string get_Cita(const std::string&) = 0;	
-	enum Libros
-	{
-		NINGUNO,
-		GENESIS,
-		EXODO,
-		LEVITICOS,
-		NUMEROS
-	};
+	virtual std::string get_Cita(const std::string&) = 0;		
 };
 
 /**
