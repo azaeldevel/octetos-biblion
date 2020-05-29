@@ -73,10 +73,16 @@ enum Libros
 	JUDAS,
 	APOCALIPSIS	
 };
-enum BiblionLenguaje
+/*enum BiblionLenguaje
 {
 	SILENCIO,
 	ESPANOL
+};*/
+enum Cita_Tipo
+{
+	NOCITA,
+	UNO,
+	RANGO,
 };
 struct Cita_Uno
 {
@@ -105,7 +111,8 @@ struct octetos_biblion_Tray
 	void* buffer;
 	const char* str;
 	enum BiblionStates state;
-	enum BiblionLenguaje lenguaje;
+	const char* lenguaje;
+	enum Cita_Tipo cita_tipo;
 	void* cita;
 };
 #ifdef __cplusplus  

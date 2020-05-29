@@ -31,10 +31,11 @@ class IBiblion
 {
 private:
 	std::string file;
-	
+	std::string lenguaje;
 public:
 	IBiblion(std::string& file);
-	virtual std::string get_Cita(const std::string&) = 0;		
+	virtual std::string get_Cita(const std::string&) = 0;
+	const std::string& get_lenguaje()const;		
 };
 
 /**

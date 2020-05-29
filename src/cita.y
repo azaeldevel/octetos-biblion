@@ -32,10 +32,10 @@
 		ty->cita = malloc(sizeof(struct Cita_Uno));
 		((struct Cita_Uno*)ty->cita)->libro = $1;
 		((struct Cita_Uno*)ty->cita)->capitulo = $2;
-		((struct Cita_Uno*)ty->cita)->versiculo = $4;	
+		((struct Cita_Uno*)ty->cita)->versiculo = $4;
+		ty->cita_tipo = UNO;
 		YYACCEPT;
 	};
-
 	cita_rango: LIBRO_VALOR CAPITULO_VALOR ':' VERSICULO_VALOR '-' VERSICULO_VALOR
 	{
 		ty->cita = malloc(sizeof(struct Cita_Rango));
@@ -43,6 +43,7 @@
 		((struct Cita_Rango*)ty->cita)->capitulo = $2;
 		((struct Cita_Rango*)ty->cita)->versIni = $4;
 		((struct Cita_Rango*)ty->cita)->versFin = $6;
+		ty->cita_tipo = RANGO;
 		YYACCEPT;
 	};
 

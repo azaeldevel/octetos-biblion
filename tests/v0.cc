@@ -23,7 +23,7 @@ int clean(void)
 
 void testParser()
 {
-	std::string strbib = "testBib";
+	std::string strbib = "tests/biblion";
 	octetos::Biblion bib(strbib);
 	std::string msg = bib.get_Cita("Genesis 1:1");
 	if(msg.length() > 0)
