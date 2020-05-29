@@ -18,7 +18,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <libconfig.h++>
-
+#include <iostream>
 
 #include "biblion.hh"
 #include "cita-lexer.h"
@@ -58,34 +58,14 @@ namespace octetos
 	 }
 	 IBiblion::IBiblion(std::string& file)
 	 {
-		this->file = file;
+		this->file = file; 
+		 
 		libconfig::Config cfg;
-
-	  	// Read the file. If there is an error, report it and exit.
-	  	try
-	  	{
-			cfg.readFile(file.c_str());
-	  	}
-	  	catch(const libconfig::FileIOException &fioex)
-	  	{
-			return;
-	  	}
-	  	catch(const libconfig::ParseException &pex)
-	  	{
-			return;
-	  	}
-
-		/*try
-  		{
-    		std::string name = cfg.lookup("name");
-  		}
-  		catch(const libconfig::SettingNotFoundException &nfex)
-  		{
-			return false;
-  		}*/
+		cfg.readFile(file.c_str());
 		
 		const libconfig::Setting& root = cfg.getRoot();
-		lenguaje = (const std::string&)root["lenguaje"];		 
+		lenguaje = (const std::string&)root["lenguaje"];
+		//std::cout << "Lenguaje : " << lenguaje << "\n";	 
 	 }
 
 

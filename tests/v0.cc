@@ -23,7 +23,8 @@ int clean(void)
 
 void testParser()
 {
-	std::string strbib = "tests/biblion";
+	// RQ : 2
+	std::string strbib = "tests/biblion/.conf";
 	octetos::Biblion bib(strbib);
 	std::string msg = bib.get_Cita("Genesis 1:1");
 	if(msg.length() > 0)
@@ -35,6 +36,18 @@ void testParser()
 	{
 		CU_ASSERT(false);
 	}
+
+	//RQ : 1
+	if(bib.get_lenguaje().compare("Español") == 0)
+	{
+		CU_ASSERT(true);
+	}
+	else
+	{
+		CU_ASSERT(false);
+	}
+	
+	
 }
 
 int main(int argc, char *argv[])
