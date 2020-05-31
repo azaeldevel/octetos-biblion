@@ -24,12 +24,13 @@ int clean(void)
 void testParser()
 {
 	// RQ : 2
-	std::string strbib = "tests/biblion/.conf";
+	std::string strbib = "tests/biblion";
 	octetos::Biblion bib(strbib);
 	std::string msg = bib.get_Cita("Genesis 1:1");
 	if(msg.length() > 0)
 	{
 		if(msg.compare("#error") == 0) CU_ASSERT(false);
+		//std::cout << msg;
 		CU_ASSERT(true);
 	}
 	else

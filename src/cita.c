@@ -9,6 +9,6 @@ void octetos_biblion_init(struct octetos_biblion_Tray* ty)
 	ty->dysplay_erro = 0;
 	ty->buffer = 0;
 	ty->lenguaje = NINGUNO;
-	ty->cita = 0;
+	ty->cita.cita.uno = 0;
 	ty->cita_tipo = NOCITA;
 }

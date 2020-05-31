@@ -105,6 +105,15 @@ enum BiblionStates
 	COLUMNA_LEIDA,
 	VERSICULO_LEIDO,
 };
+struct Cita
+{
+	enum Cita_Tipo tipo;
+	union
+	{
+		struct Cita_Uno* uno;
+		struct Cita_Rango* rango;
+	} cita;
+};
 struct octetos_biblion_Tray
 {
     int dysplay_erro;
@@ -113,7 +122,7 @@ struct octetos_biblion_Tray
 	enum BiblionStates state;
 	const char* lenguaje;
 	enum Cita_Tipo cita_tipo;
-	void* cita;
+	struct Cita cita;
 };
 #ifdef __cplusplus  
 extern "C" {

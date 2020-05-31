@@ -29,21 +29,21 @@
 
 	cita_uno : LIBRO_VALOR CAPITULO_VALOR ':' VERSICULO_VALOR
 	{
-		ty->cita = malloc(sizeof(struct Cita_Uno));
-		((struct Cita_Uno*)ty->cita)->libro = $1;
-		((struct Cita_Uno*)ty->cita)->capitulo = $2;
-		((struct Cita_Uno*)ty->cita)->versiculo = $4;
-		ty->cita_tipo = UNO;
+		ty->cita.cita.uno = malloc(sizeof(struct Cita_Uno));
+		ty->cita.cita.uno->libro = $1;
+		ty->cita.cita.uno->capitulo = $2;
+		ty->cita.cita.uno->versiculo = $4;
+		ty->cita.tipo = UNO;
 		YYACCEPT;
 	};
 	cita_rango: LIBRO_VALOR CAPITULO_VALOR ':' VERSICULO_VALOR '-' VERSICULO_VALOR
 	{
-		ty->cita = malloc(sizeof(struct Cita_Rango));
-		((struct Cita_Rango*)ty->cita)->libro = $1;
-		((struct Cita_Rango*)ty->cita)->capitulo = $2;
-		((struct Cita_Rango*)ty->cita)->versIni = $4;
-		((struct Cita_Rango*)ty->cita)->versFin = $6;
-		ty->cita_tipo = RANGO;
+		ty->cita.cita.rango = malloc(sizeof(struct Cita_Rango));
+		ty->cita.cita.rango->libro = $1;
+		ty->cita.cita.rango->capitulo = $2;
+		ty->cita.cita.rango->versIni = $4;
+		ty->cita.cita.rango->versFin = $6;
+		ty->cita.tipo = RANGO;
 		YYACCEPT;
 	};
 

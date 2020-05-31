@@ -19,6 +19,8 @@
 #include <string.h>
 #include <libconfig.h++>
 #include <iostream>
+#include <fstream>
+
 
 #include "biblion.hh"
 #include "cita-lexer.h"
@@ -28,45 +30,224 @@ namespace octetos
 {
 	Biblion::Biblion(std::string& file) : IBiblion(file)
 	{
+		
 	}
 	
 	std::string Biblion::get_Cita(const std::string& str)
 	{
-		octetos_biblion_Tray ty;
-		octetos_biblion_init(&ty);
-
-		//ty.str = (const char*)malloc(str.size());
-		//strcpy((char*)ty.str,(char*)str.c_str());
-		ty.str = str.c_str();
-		//ty.lenguaje = BiblionLenguaje::ESPANOL;
-		ty.lenguaje = get_lenguaje().c_str();
-		int ret = cita_parser(&ty);
-
-		if(ret == 0) return "Cita...";
-		return "#error";
+		//std::cout << "Step 1: " << '\n';
+		Cita cita = parseCita(str);
+		//std::cout << "Step 2: " << '\n';
+		if(cita.tipo == UNO)
+		{
+			//std::cout << "Step 2.1: " << '\n';
+			std::string f = get_file();
+			f += "/" + iltosl(cita.cita.uno->libro);
+			f += "/" + std::to_string(cita.cita.uno->capitulo);
+			f += "/" + std::to_string(cita.cita.uno->versiculo);
+			//std::cout << "Step 2.2: " << '\n';
+			std::ifstream fs;
+			fs.open(f);
+			std::string line,strcita;
+			//std::cout << "Step 2.3: " << '\n';
+		  	if (fs.is_open())
+		  	{
+				//std::cout << "Step 2.3.1: " << '\n';
+				while ( std::getline (fs,line) )
+				{
+				  //std::cout << line << '\n';
+					strcita += line;
+				}
+				fs.close();
+				return strcita;
+		  	}
+			else
+			{
+				std::cerr << "Fail to open file : " << f << "\n";
+			}
+		}
+		
+		return "Cita...";
 	}
 
 
 
 
 
+	std::string IBiblion::get_file()
+	{
+		return file;
+	}
+	std::string IBiblion::iltosl(Libros l)
+	{
+		if(get_lenguaje().compare("Español") == 0)
+		{
+			switch(l)
+			{
+				case GENESIS:
+					return "Genesis";
+				case EXODO:
+					return  "Exodo";
+				case LEVITICOS:	
+					return "Leviticos";
+				case NUMEROS:
+					return "Numeros";
+				case DEUTERONOMIOS:
+					return "Deuteronomios";
+				case JOSUE:
+					return "Jouse";
+				case JUECES:
+					return "Jueces";
+				case RUT:
+					return "Rut";
+				case SAMUEL1:
+					return "Samuel1";
+				case SAMUEL2:
+					return "Samuel2";
+				case REYES1:
+					return "Reyes1";
+				case REYES2:
+					return "Reyes2";
+				case CRONICAS1:
+					return "Cronicas1";
+				case CRONICAS2:
+					return "Crinicas2";
+				case ESDRAS:
+					return "Esdras";
+				case NEHEMIAS:
+					return "Nehemias";
+				case ESTER:
+					return "Ester";
+				case JOB:
+					return "Job";
+				case SALMOS:
+					return "Salmos";
+				case PROVERBIOS:
+					return "Proverbios";
+				case ECLESIASTES:
+					return "Eclesiastes";
+				case CANTARES:
+					return "Canteres";
+				case ISAIAS:
+					return "Isaisas";
+				case JEREMIAS:
+					return "Jeremias";
+				case LAMENTACIONES:
+					return "Lamentaciones";
+				case EZEQUIEL:
+					return "Ezquiel";
+				case DANIEL:
+					return "Daniel";
+				case OSEAS:
+					return "Oseas";
+				case JOEL:
+					return "Joel";
+				case AMOS:
+					return "Amos";
+				case ABDIAS:
+					return "Abdias";
+				case JONAS:
+					return "Jonas";
+				case MIQUEAS:
+					return "Miqueas";
+				case NAHUM:
+					return "Nahum";
+				case HABACUC:
+					return "Habacuc";
+				case SOFONIAS:
+					return "Sofonias";
+				case HAGEO:
+					return "Hageo";
+				case ZACARIAS:
+					return "Zacarias";
+				case MALAQUIAS:
+					return "Malaquias";
+				case SANMATEO:
+					return "SanMateo";
+				case SANMARCOS:
+					return "SanMarcos";
+				case SANLUCAS:
+					return "SanLucas";
+				case SANJUAN:
+					return "SanJuan";
+				case HECHOS:
+					return "Hechos";
+				case ROMANOS:
+					return "Romanos";
+				case CORINTIOS1:
+					return "Corintios";
+				case CORINTIOS2:
+					return "Corintios";
+				case GALATAS:
+					return "Galatas";
+				case EFESIOS:
+					return "Efisios";
+				case FILIPENSES:
+					return "Filipensese";
+				case COLOSENSES:
+					return "Colosenses";
+				case TESALONICENSES1:
+					return "Tesalonicenses1";
+				case TESALONICENSES2:
+					return "Tesalonicenses2";
+				case TIMOTEO1:
+					return "Tomiteo1";
+				case TIMOTEO2:
+					return "Tomiteo2";
+				case TITO:
+					return "Tito";
+				case FILEMON:
+					return "Filemon";
+				case HEBREOS:
+					return "Hebreos";
+				case SANTIAGO:
+					return "Santiago";
+				case PEDRO1:
+					return "Pedro1";
+				case PEDRO2:
+					return "Pedro2";
+				case JUAN1:
+					return "Juan1";
+				case JUAN2:
+					return "Juan2";
+				case JUAN3:
+					return "Juan3";
+				case JUDAS:
+					return "Judas";
+				case APOCALIPSIS:
+					return "Apocalipsis";	
+			}
+		}
+	}
+	
+	Cita IBiblion::parseCita(const std::string& str)
+	{		
+		octetos_biblion_Tray ty;
+		octetos_biblion_init(&ty);
 
+		ty.str = str.c_str();
+		ty.lenguaje = get_lenguaje().c_str();
+		int ret = cita_parser(&ty);
 
-	 const std::string& IBiblion::get_lenguaje() const
-	 {
+		if(ret == 0) return ty.cita;
+		return ty.cita;		
+	}
+	const std::string& IBiblion::get_lenguaje() const
+	{
 		return lenguaje;
-	 }
-	 IBiblion::IBiblion(std::string& file)
-	 {
+	}
+	IBiblion::IBiblion(std::string& file)
+	{
 		this->file = file; 
 		 
 		libconfig::Config cfg;
-		cfg.readFile(file.c_str());
+		std::string fconf = file + "/.conf";
+		cfg.readFile(fconf.c_str());
 		
 		const libconfig::Setting& root = cfg.getRoot();
 		lenguaje = (const std::string&)root["lenguaje"];
 		//std::cout << "Lenguaje : " << lenguaje << "\n";	 
-	 }
+	}
 
 
 

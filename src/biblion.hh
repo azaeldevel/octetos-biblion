@@ -17,7 +17,8 @@
 
 #include <string>
 #include <octetos/core/Artifact.hh>
- 
+#include "cita-lexer.h"
+
 namespace octetos
 {
 
@@ -27,15 +28,24 @@ namespace octetos
 **/
 bool getPackageInfo(core::Artifact&);
 
+/**
+* \brief Interface Biblion
+**/
 class IBiblion
 {
 private:
 	std::string file;
 	std::string lenguaje;
+
+protected:
+	Cita parseCita(const std::string&);
+
 public:
 	IBiblion(std::string& file);
 	virtual std::string get_Cita(const std::string&) = 0;
-	const std::string& get_lenguaje()const;		
+	const std::string& get_lenguaje()const;	
+	std::string iltosl(Libros);	
+	std::string get_file();
 };
 
 /**
@@ -44,7 +54,6 @@ public:
 class Biblion : public IBiblion
 {
 private:
-	bool parseCita(const std::string&);
 	
 public:
 	Biblion(std::string& file);
