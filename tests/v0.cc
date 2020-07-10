@@ -48,7 +48,17 @@ void testParser()
 		CU_ASSERT(false);
 	}
 	
-	
+	std::string msg3 = bib.get_Cita("Genesis 1:1-3");
+	if(msg3.length() > 0)
+	{
+		if(msg.compare("#error") == 0) CU_ASSERT(false);
+		//std::cout << msg3;
+		CU_ASSERT(true);
+	}
+	else
+	{
+		CU_ASSERT(false);
+	}
 }
 
 int main(int argc, char *argv[])

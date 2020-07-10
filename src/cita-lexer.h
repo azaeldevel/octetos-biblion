@@ -104,6 +104,7 @@ enum BiblionStates
 	CAPITULO_LEIDO,
 	COLUMNA_LEIDA,
 	VERSICULO_LEIDO,
+	GUION_LEIDO,	
 };
 struct Cita
 {

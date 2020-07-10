@@ -66,6 +66,38 @@ namespace octetos
 				std::cerr << "Fail to open file : " << f << "\n";
 			}
 		}
+		else if(cita.tipo == RANGO)
+		{
+			std::string strcita;
+			//std::cout << "Step 2.1: " << '\n';
+			for(int i = cita.cita.rango->versIni; i <= cita.cita.rango->versFin; i++)
+			{
+				//std::cout << "Leyendo versiculo :" << i << " de " << cita.cita.rango->versFin << "\n";
+				std::string f = get_file();
+				f += "/" + iltosl(cita.cita.rango->libro);
+				f += "/" + std::to_string(cita.cita.rango->capitulo);
+				f += "/" + std::to_string(i);
+				//std::cout << "Open " << f << "\n";
+				std::ifstream fs;
+				fs.open(f);
+				std::string line;
+				//std::cout << "Step 2.3: " << '\n';
+			  	if (fs.is_open())
+			  	{
+					//std::cout << "Step 2.3.1: " << '\n';
+					while ( std::getline (fs,line) )
+					{					  
+						strcita += line;
+					}
+					fs.close();
+			  	}
+				else
+				{
+					std::cerr << "Fail to open file : " << f << "\n";
+				}
+			}
+					return strcita;
+		}
 		
 		return "Cita...";
 	}

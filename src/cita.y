@@ -19,6 +19,7 @@
 %token <sval> LIBRO_VALOR
 %token <sval> CAPITULO_VALOR
 %token <sval> VERSICULO_VALOR
+%token GUION '-'
 
 %locations
 
@@ -38,11 +39,13 @@
 	};
 	cita_rango: LIBRO_VALOR CAPITULO_VALOR ':' VERSICULO_VALOR '-' VERSICULO_VALOR
 	{
+		//printf("Rango\n");
 		ty->cita.cita.rango = malloc(sizeof(struct Cita_Rango));
 		ty->cita.cita.rango->libro = $1;
 		ty->cita.cita.rango->capitulo = $2;
 		ty->cita.cita.rango->versIni = $4;
 		ty->cita.cita.rango->versFin = $6;
+		//printf("Cita %i %i-%i\n",$2,$4,$6);
 		ty->cita.tipo = RANGO;
 		YYACCEPT;
 	};

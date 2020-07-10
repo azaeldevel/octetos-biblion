@@ -463,6 +463,7 @@ extern "C" int yylex(struct octetos_biblion_Tray* ty)
 					c = buffer->next_char();
 					goto esperandoNumero2;
 				}
+				
 				if(is_digit(c))
 				{
 					while(is_digit(c))
@@ -472,6 +473,52 @@ extern "C" int yylex(struct octetos_biblion_Tray* ty)
 					buffer->prev_char();
 					buffer->proceed();
 					//no es digit, no importa que sea ya termino de leer el versiculo
+					yylval.sval=(short)atoi(buffer->get_text());
+					//std::cout << "Versiculo : " << yylval.sval << "\n";
+					ty->state =  VERSICULO_LEIDO;
+					return VERSICULO_VALOR;
+				}				
+			}
+			case VERSICULO_LEIDO:
+			{
+				//c = buffer->next_char();
+				//std::cout << "Guion Leyendo '"  << c << "'.\n";
+				if(c == '-')
+				{
+					//std::cout << "Guion Leyendo.\n";
+					//buffer->prev_char();
+					buffer->proceed();
+					ty->state = GUION_LEIDO;
+					return c;
+				}
+			}
+			case GUION_LEIDO:
+			{
+				//std::cout << "Guion Leido.\n";
+				esperandoNumero3:
+				if(c == ' ' or c == '-')
+				{
+					//std::cout << "step 1 : c = " << c << "\n";
+					c = buffer->next_char();
+					buffer->proceed();
+					goto esperandoNumero3;
+				}
+				
+				//c = buffer->next_char();
+				//buffer->proceed();
+				//buffer->prev_char();
+				if(is_digit(c))
+				{
+					//std::cout << "step 2 : Vers = " << c << "\n";
+					while(is_digit(c))
+					{
+						c = buffer->next_char();
+						//std::cout << "step 3 : c = " << c << "\n";	
+					}
+					//buffer->prev_char();				
+					buffer->proceed();
+					//no es digit, no importa que sea ya termino de leer el versiculo
+					//std::cout << "gettext : " << buffer->get_text() << "\n";
 					yylval.sval=(short)atoi(buffer->get_text());
 					//std::cout << "Versiculo : " << yylval.sval << "\n";
 					ty->state =  VERSICULO_LEIDO;
