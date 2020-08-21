@@ -1,3 +1,4 @@
+AUTOMAKE_OPTIONS=foreign 1.4
 
 cita.tab.c : cita.y 
 	bison -d -o $@ $<
@@ -34,3 +35,7 @@ libbiblion_la_SOURCES = \
 	biblion.cc
 
 
+pkgconfigdir = $(libdir)/pkgconfig
+pkgconfig_DATA = octetos-biblion.pc
+
+EXTRA_DIST = octetos-biblion.pc.in

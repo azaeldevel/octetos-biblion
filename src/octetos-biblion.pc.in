@@ -1,0 +1,13 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@prefix@/lib
+datarootdir=@datarootdir@
+datadir=@datadir@
+includedir=@prefix@/include
+
+Name: octetos-core
+Description: Library for reading biblia.
+Version: @VERSION@
+Requires: 
+Libs: -L${libdir} -loctetos-core -lconfig++
+Cflags: -I${includedir}
